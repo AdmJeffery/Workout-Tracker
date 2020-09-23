@@ -1,4 +1,4 @@
-const express = require("experess");
+const express = require("express");
 const logger = require("morgan")
 const mongoose = require("mongoose");
 
@@ -13,10 +13,15 @@ app.use(express.json());
 // makes public folder visible to all
 app.use(express.static("public"));
 // mongoose connection
-mongoose.connect("mongodb://localhost/workout", {
-    useNewUrlParser: true,
-  useFindAndModify: false
-});
+mongoose.connect(
+    process.env.MONGODB_URI || 'mongodb://localhost/WorkoutTracker',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  );
 
 // routes
 app.use(require("./routes/api.js"));
