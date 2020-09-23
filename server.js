@@ -10,11 +10,18 @@ app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+// makes public folder visible to all
 app.use(express.static("public"));
-
+// mongoose connection
 mongoose.connect("mongodb://localhost/workout", {
     useNewUrlParser: true,
   useFindAndModify: false
-})
+});
 
+// routes
+app.use(require("./routes/api.js"));
+app.use(require("./routes/view.js"));
+
+app.listen(PORT, () => {
+    console.log(`App running on port ${PORT}!`)
+})
