@@ -4,10 +4,10 @@ const Workout = require("../models/workout.js");
 router.post("/api/workouts", (req, data) =>{
     Workout.create({})
         .then(dbWorkout =>{
-            res.json(dbWorkout);
+            data.json(dbWorkout);
         })
         .catch(err => {
-            res.json(err);
+            data.json(err);
         }) 
 });
 
@@ -22,3 +22,25 @@ router.put("/api/workouts/:id", ({body, params}, res) =>{
             res.json(err)
         })
 })
+
+router.get("/api/workouts", (req, data) => {
+    Workout.find({}).limit(7)
+        .then(dbWorkouts => {
+            data.json(dbWorkouts)
+        })
+        .catch(err => {
+            data.json(err)
+        })
+});
+
+router.get("/api/workouts/range", (req, res) => {
+    Workout.find({}).limit(7)
+        .then(dbWorkouts => {
+            console.log(dbWorkouts)
+            res.json(dbWorkouts)
+        })
+        .catch(err =>{
+            res.json(err)
+        })
+});
+
